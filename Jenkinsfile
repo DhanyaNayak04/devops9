@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Creating virtual environment and installing dependencies...'
+                sh 'pip3 install -r python-flask-app/requirements.txt'
             }
         }
         stage('Test') {
