@@ -1,12 +1,12 @@
 pipeline {
-    agent {
-        docker { image 'python:3.9' }
-    }
+    agent any
 
     stages {
         stage('Build') {
             steps {
                 echo 'Creating virtual environment and installing dependencies...'
+                sh 'python --version || echo "Python not found"'
+                sh 'pip --version || echo "pip not found"'
                 sh 'pip install -r python-flask-app/requirements.txt'
             }
         }
