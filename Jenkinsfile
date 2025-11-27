@@ -11,13 +11,13 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'python3 -m unittest discover -s python-flask-app'
+                    sh 'pip install -r python-flask-app/requirements.txt'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                sh '''
+                    sh 'python -m unittest discover -s python-flask-app'
                 mkdir -p ${WORKSPACE}/python-app-deploy
                 cp ${WORKSPACE}/app.py ${WORKSPACE}/python-app-deploy/
                 '''
