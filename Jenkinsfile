@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Running application...'
                 sh "nohup python ${env.WORKSPACE}/python-app-deploy/app.py > ${env.WORKSPACE}/python-app-deploy/app.log 2>&1 &"
-                sh "echo $! > ${env.WORKSPACE}/python-app-deploy/app.pid"
+                sh "echo \$! > ${env.WORKSPACE}/python-app-deploy/app.pid"
             }
         }
         stage('Test Application') {
