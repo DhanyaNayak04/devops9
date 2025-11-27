@@ -5,39 +5,34 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Creating virtual environment and installing dependencies...'
-                sh 'pip3 install -r python-flask-app/requirements.txt'
+                sh 'pip install -r python-flask-app/requirements.txt'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                    sh 'pip install -r python-flask-app/requirements.txt'
+                // ...existing code...
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                    sh 'python -m unittest discover -s python-flask-app'
+                sh 'python -m unittest discover -s python-flask-app'
                 sh "mkdir -p ${env.WORKSPACE}/python-app-deploy"
-                cp ${WORKSPACE}/app.py ${WORKSPACE}/python-app-deploy/
-                '''
+                sh "cp ${env.WORKSPACE}/python-flask-app/app.py ${env.WORKSPACE}/python-app-deploy/"
             }
         }
         stage('Run Application') {
             steps {
                 echo 'Running application...'
-                sh '''
-                nohup python3 ${WORKSPACE}/python-app-deploy/app.py > ${WORKSPACE}/python-app-deploy/app.log 2>&1 &
-                echo $! > ${WORKSPACE}/python-app-deploy/app.pid
-                '''
+                sh "nohup python ${env.WORKSPACE}/python-app-deploy/app.py > ${env.WORKSPACE}/python-app-deploy/app.log 2>&1 &"
+                sh "echo $! > ${env.WORKSPACE}/python-app-deploy/app.pid"
             }
         }
         stage('Test Application') {
             steps {
                 echo 'Testing application...'
-                sh '''
-                python3 ${WORKSPACE}/test_app.py
-                '''
+                sh "python ${env.WORKSPACE}/python-flask-app/test_app.py"
             }
         }
     }
