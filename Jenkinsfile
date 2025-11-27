@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'python3 -m unittest discover -s .'
+                sh 'python3 -m unittest discover -s python-flask-app'
             }
         }
         stage('Deploy') {
