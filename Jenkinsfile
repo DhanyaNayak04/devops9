@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Deploying application...'
                     sh 'python -m unittest discover -s python-flask-app'
-                mkdir -p ${WORKSPACE}/python-app-deploy
+                sh "mkdir -p ${env.WORKSPACE}/python-app-deploy"
                 cp ${WORKSPACE}/app.py ${WORKSPACE}/python-app-deploy/
                 '''
             }
